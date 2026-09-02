@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Salon Privé Arcade & Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- BOUTON FLOTTANT POUR OUVRIR/FERMER LE CHAT -->
+    <button id="toggle-chat-btn" class="toggle-btn">💬</button>
+
+    <div class="container">
+        <!-- ZONE DE GAUCHE : LES JEUX -->
+        <div class="zone-jeux">
+            <h2>🎮 Jeux & Activités</h2>
+            <div class="liste-jeux">
+                <button onclick="lancerJeu('https://play2048.co')">Jouer à 2048</button>
+                <button onclick="lancerJeu('https://pacman.live')">Jouer à Pacman</button>
+            </div>
+            <div class="ecran-jeu">
+                <!-- L'iframe chargera les jeux ici -->
+                <iframe id="iframe-jeu" src="" style="width:100%; height:100%; border:none; display:none;"></iframe>
+                <p id="texte-attente" style="text-align: center; margin-top: 50px; color: #666;">Sélectionne une activité à gauche</p>
+            </div>
+        </div>
+
+        <!-- BLOC CHAT + BARRE SOCIALE (Masquable) -->
+        <div id="bloc-chat-complet" class="bloc-chat-complet">
+            
+            <!-- Le bord magique pour glisser et agrandir -->
+            <div id="resize-handle" class="resize-handle"></div>
+
+            <!-- BARRE DE NAVIGATION SOCIALE -->
+            <div class="barre-sociale">
+                <button onclick="ouvrirPopup('popup-add-amis')" title="Ajouter un ami">➕👤</button>
+                <button onclick="ouvrirPopup('popup-demandes')" title="Demandes reçues">🔔</button>
+                <button onclick="ouvrirPopup('popup-groupes')" title="Créer un groupe">👥</button>
+                <button onclick="ouvrirPopup('popup-mp')" title="Messages privés">✉️</button>
+            </div>
+
+            <!-- LE CHAT TWITCH-STYLE -->
+            <div class="zone-chat">
+                <h2>💬 Chat Général</h2>
+                <div class="messages">
+                    <p><b>Système :</b> Bienvenue ! Glisse le bord gauche pour m'agrandir.</p>
+                </div>
+                <div class="input-chat">
+                    <input type="text" placeholder="Ton message...">
+                    <button>Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🪟 POPUPS DÉPLAÇABLES (WINDOWS STYLE) -->
+    <!-- Popup Ajouter Ami -->
+    <div id="popup-add-amis" class="popup">
+        <div class="popup-header" onmousedown="dragStart(event, 'popup-add-amis')" ontouchstart="dragStart(event, 'popup-add-amis')">
+            <span>Ajouter des Amis</span>
+            <button onclick="fermerPopup('popup-add-amis')">X</button>
+        </div>
+        <div class="popup-body">
+            <input type="text" placeholder="Pseudo de ton pote...">
+            <button>Envoyer la demande</button>
+        </div>
+    </div>
+
+    <!-- Les autres popups suivent exactement la même structure HTML -->
+    <div id="popup-demandes" class="popup">
+        <div class="popup-header" onmousedown="dragStart(event, 'popup-demandes')" ontouchstart="dragStart(event, 'popup-demandes')">
+            <span>Demandes en attente</span>
+            <button onclick="fermerPopup('popup-demandes')">X</button>
+        </div>
+        <div class="popup-body"><p>Aucune demande pour le moment.</p></div>
+    </div>
+
+    <div id="popup-groupes" class="popup">
+        <div class="popup-header" onmousedown="dragStart(event, 'popup-groupes')" ontouchstart="dragStart(event, 'popup-groupes')">
+            <span>Mes Groupes</span>
+            <button onclick="fermerPopup('popup-groupes')">X</button>
+        </div>
+        <div class="popup-body"><button>+ Créer un nouveau salon</button></div>
+    </div>
+
+    <div id="popup-mp" class="popup">
+        <div class="popup-header" onmousedown="dragStart(event, 'popup-mp')" ontouchstart="dragStart(event, 'popup-mp')">
+            <span>Messages Privés (MP)</span>
+            <button onclick="fermerPopup('popup-mp')">X</button>
+        </div>
+        <div class="popup-body"><p>Sélectionne un ami pour parler en privé.</p></div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
